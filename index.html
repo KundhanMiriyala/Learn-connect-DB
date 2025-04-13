@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact Form</title>
   <style>
     body {
@@ -62,10 +62,10 @@
 
   <form id="contactForm">
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name">
+    <input type="text" id="name" name="name" required />
 
     <label for="phoneno">Phone Number:</label>
-    <input type="tel" id="phoneno" name="phoneno">
+    <input type="tel" id="phoneno" name="phoneno" required />
 
     <div class="button-group">
       <button type="submit" class="submit-btn">Submit</button>
@@ -75,39 +75,40 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
-<script>
-  const supabaseUrl = 'https://yzufsdosgotgetzbgdsx.supabase.co';
-  const supabaseKey = 'your_key_here';
-  const client = window.supabase.createClient(supabaseUrl, supabaseKey); 
+  <script>
+    const supabaseUrl = 'https://yzufsdosgotgetzbgdsx.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl6dWZzZG9zZ290Z2V0emJnZHN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0NTMzNzksImV4cCI6MjA2MDAyOTM3OX0.QZFP3UGXmaiUgfhG5l1-1W2qrWsOkA1VkHUXpwaVUF8';
+    
+    const client = window.supabase.createClient(supabaseUrl, supabaseKey); // ✅ fixed
 
-  document.getElementById('contactForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
+ 
+    document.getElementById('contactForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
 
-    const name = document.getElementById('name').value.trim();
-    const phoneno = document.getElementById('phoneno').value.trim();
+      const name = document.getElementById('name').value.trim();
+      const phoneno = document.getElementById('phoneno').value.trim();
 
-    if (!name || !phoneno) {
-      alert('Please fill out both fields.');
-      return;
-    }
+      if (!name || !phoneno) {
+        alert('Please fill out both fields.');
+        return;
+      }
 
-    try {
-      const { data, error } = await client
-        .from('contacts')
-        .insert([{ name, phoneno }]); 
+      try {
+        const { data, error } = await client
+          .from('contacts')
+          .insert([{ name, phoneno }]); 
 
-      if (error) throw error;
+        if (error) throw error;
 
-      alert('Submitted successfully!');
-      console.log('Data inserted:', data);
-      document.getElementById('contactForm').reset();
-    } catch (error) {
-      alert('Something went wrong!');
-      console.error('Insert error:', error.message);
-    }
-  });
-</script>
-  
+        alert('Submitted successfully!');
+        console.log('Inserted:', data);
+        document.getElementById('contactForm').reset();
+      } catch (error) {
+        alert(' Submission failed. See console for details.');
+        console.error('Insert error:', error.message);
+      }
+    });
+  </script>
 
 </body>
 </html>
